@@ -148,6 +148,6 @@ Free to use, modify, and distribute.
 
 👨‍💻 Author
 
-Mohd Kaif
-📍 India
+Mohd Kaif|
+📍 India|
 🔗 LinkedIn: https://www.linkedin.com/in/thekaifqureshi
