@@ -1,73 +1,153 @@
-# Welcome to your Lovable project
+📄 AI Resume Analyzer – ATS Friendly Resume Checker
 
-## Project info
+An AI-powered web application that analyzes resumes for ATS (Applicant Tracking System) compatibility based on a selected job role or job description.
+The tool provides realistic ATS scoring, highlights missing keywords, detects formatting issues, and suggests actionable improvements — just like real-world ATS platforms.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+🚀 Key Features
 
-## How can I edit this code?
+📤 Upload Resume (PDF / DOCX)
 
-There are several ways of editing your application.
+🧠 AI-based Resume Parsing
 
-**Use Lovable**
+🎯 Job Role / Job Description Matching
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+📊 ATS Score (0–100) with detailed breakdown
 
-Changes made via Lovable will be committed automatically to this repo.
+🔍 Keyword Match & Missing Keywords Detection
 
-**Use your preferred IDE**
+🧱 Section Analysis (Summary, Skills, Experience, Education, Projects)
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+🚨 Formatting & Date Issues Detection
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+✍️ AI-powered Resume Improvement Suggestions
 
-Follow these steps:
+🧑‍💼 Role Mismatch Detection (Prevents fake high scores)
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+🧠 How ATS Scoring Works
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+The ATS score is calculated using a realistic scoring engine, not random or inflated values.
 
-# Step 3: Install the necessary dependencies.
-npm i
+Component	Weight
+Keyword Match	40%
+Resume Formatting	20%
+Section Completeness	20%
+Readability & Clarity	20%
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+⚠️ Important:
+A low score does not mean the candidate is weak.
+It usually means the resume is not aligned with the selected job role.
 
-**Edit a file directly in GitHub**
+🔍 Example Analysis Output
+{
+  "atsScore": 32,
+  "keywordMatch": "5%",
+  "sectionsFound": 5,
+  "issuesFound": 13,
+  "missingKeywords": ["Python", "SQL", "Machine Learning"],
+  "formattingIssues": ["Future dates detected", "Non-standard layout"],
+  "recommendations": [
+    "Add a Projects section",
+    "Align resume with selected job role",
+    "Replace tool names with skill-based keywords"
+  ]
+}
+⚠️ Role Mismatch Detection (Key Feature)
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+If a resume background does not match the selected role (e.g. CA/Audit resume analyzed for Data Science Engineer), the system:
 
-**Use GitHub Codespaces**
+Clearly flags Role Mismatch
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Avoids misleading high ATS scores
 
-## What technologies are used for this project?
+Explains why the score is low
 
-This project is built with:
+Suggests better role alignment or resume rewrite
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+This makes the analyzer honest, transparent, and industry-aligned.
 
-## How can I deploy this project?
+🛠️ Tech Stack
+Frontend
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+React.js
 
-## Can I connect a custom domain to my Lovable project?
+Tailwind CSS
 
-Yes, you can!
+Chart-based score visualization
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+Backend
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Node.js
+
+Express.js
+
+Resume Parsing (PDF & DOCX)
+
+AI/LLM-based text analysis
+
+AI Logic
+
+Skill-based keyword normalization
+
+ATS-safe scoring rules
+
+Role-aware evaluation prompts
+
+📁 Project Structure
+ai-resume-analyzer/
+│
+├── client/              # React frontend
+│   ├── components/
+│   ├── pages/
+│   └── styles/
+│
+├── server/              # Node.js backend
+│   ├── routes/
+│   ├── services/
+│   └── utils/
+│
+├── prompts/             # ATS & AI analysis prompts
+├── README.md
+└── .env.example
+🧪 Supported Use Cases
+
+Students checking ATS readiness
+
+Job seekers targeting specific roles
+
+Career coaches & resume reviewers
+
+Recruiters doing quick resume screening
+
+SaaS-based resume analysis platforms
+
+❗ Disclaimer
+
+This tool does not replicate any specific company’s ATS.
+It provides realistic guidance based on industry best practices.
+
+ATS systems vary by company and role, but alignment + keywords + formatting remain universal.
+
+📌 Future Enhancements
+
+Resume Rewrite with AI
+
+Job Description Auto-Import
+
+Resume Version History
+
+Authentication & User Dashboard
+
+Download ATS-Optimized Resume
+
+Premium Scoring Reports
+
+📄 License
+
+MIT License
+Free to use, modify, and distribute.
+
+👨‍💻 Author
+
+Mohd Kaif
+📍 India
+🔗 LinkedIn: https://www.linkedin.com/in/thekaifqureshi
