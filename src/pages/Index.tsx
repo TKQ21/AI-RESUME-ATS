@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FileSearch, Loader2, Sparkles } from "lucide-react";
+import { FileSearch, Loader2, Sparkles, LogOut } from "lucide-react";
 import { ResumeUploader } from "@/components/ResumeUploader";
 import { AnalysisResults } from "@/components/AnalysisResults";
 import { extractResumeText } from "@/lib/resume-parser";
 import type { AnalysisResult } from "@/types/analysis";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -13,7 +15,12 @@ const Index = () => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [result, setResult] = useState<AnalysisResult | null>(null);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    navigate("/auth");
+  };
   const handleAnalyze = async () => {
     if (!file) {
       toast({ title: "Resume upload करें", description: "कृपया पहले अपना resume upload करें।", variant: "destructive" });
@@ -30,33 +37,23 @@ const Index = () => {
     try {
       const resumeText = await extractResumeText(file);
 
-      const response = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/analyze-resume`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-          },
-          body: JSON.stringify({ resumeText, jobDescription }),
-        }
-      );
+      const { data, error } = await supabase.functions.invoke("analyze-resume", {
+        body: { resumeText, jobDescription },
+      });
 
-      if (!response.ok) {
-        const err = await response.json();
-        if (response.status === 429) {
+      if (error) {
+        throw new Error(error.message || "Analysis failed");
+      }
+
+      if (data?.error) {
+        if (data.error.includes("Rate limit")) {
           toast({ title: "Rate limit", description: "बहुत सारे requests। कृपया कुछ देर बाद try करें।", variant: "destructive" });
           return;
         }
-        if (response.status === 402) {
-          toast({ title: "Credits खत्म", description: "AI credits add करें।", variant: "destructive" });
-          return;
-        }
-        throw new Error(err.error || "Analysis failed");
+        throw new Error(data.error);
       }
 
-      const data: AnalysisResult = await response.json();
-      setResult(data);
+      setResult(data as AnalysisResult);
     } catch (err: any) {
       console.error("Analysis error:", err);
       toast({
@@ -78,11 +75,20 @@ const Index = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-center"
+            className="text-center relative"
           >
             <div className="inline-flex items-center gap-2 rounded-full bg-primary/20 px-4 py-1.5 text-sm font-medium text-primary-foreground/90 mb-6">
               <Sparkles className="h-4 w-4" />
               AI-Powered Resume Analysis
+            </div>
+            <div className="absolute top-4 right-4">
+              <button
+                onClick={handleSignOut}
+                className="inline-flex items-center gap-1.5 rounded-lg bg-primary-foreground/10 px-3 py-1.5 text-xs font-medium text-primary-foreground/80 hover:bg-primary-foreground/20 transition-colors"
+              >
+                <LogOut className="h-3.5 w-3.5" />
+                Sign Out
+              </button>
             </div>
             <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
               AI Resume Analyzer
