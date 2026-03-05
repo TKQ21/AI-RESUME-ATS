@@ -45,21 +45,15 @@ const Index = () => {
         throw new Error(error.message || "Analysis failed");
       }
 
-      if (!response.ok) {
-        const err = await response.json();
-        if (response.status === 429) {
+      if (data?.error) {
+        if (data.error.includes("Rate limit")) {
           toast({ title: "Rate limit", description: "बहुत सारे requests। कृपया कुछ देर बाद try करें।", variant: "destructive" });
           return;
         }
-        if (response.status === 402) {
-          toast({ title: "Credits खत्म", description: "AI credits add करें।", variant: "destructive" });
-          return;
-        }
-        throw new Error(err.error || "Analysis failed");
+        throw new Error(data.error);
       }
 
-      const data: AnalysisResult = await response.json();
-      setResult(data);
+      setResult(data as AnalysisResult);
     } catch (err: any) {
       console.error("Analysis error:", err);
       toast({
