@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FileSearch, Loader2, Sparkles } from "lucide-react";
+import { FileSearch, Loader2, Sparkles, LogOut } from "lucide-react";
 import { ResumeUploader } from "@/components/ResumeUploader";
 import { AnalysisResults } from "@/components/AnalysisResults";
 import { extractResumeText } from "@/lib/resume-parser";
 import type { AnalysisResult } from "@/types/analysis";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
   const [file, setFile] = useState<File | null>(null);
