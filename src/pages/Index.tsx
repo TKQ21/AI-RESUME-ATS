@@ -15,7 +15,12 @@ const Index = () => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [result, setResult] = useState<AnalysisResult | null>(null);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    navigate("/auth");
+  };
   const handleAnalyze = async () => {
     if (!file) {
       toast({ title: "Resume upload करें", description: "कृपया पहले अपना resume upload करें।", variant: "destructive" });
