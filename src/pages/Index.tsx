@@ -174,6 +174,8 @@ const Index = () => {
       {/* Footer */}
       <footer className="border-t border-border py-6 text-center text-sm text-muted-foreground">
         <p>AI Resume Analyzer — ATS Friendly Checker ✨</p>
+        <p className="mt-2">© 2026 Mohd Kaif</p>
+        <p className="text-xs text-muted-foreground/60 mt-1">Built with AI assistance</p>
       </footer>
     </div>
   );
