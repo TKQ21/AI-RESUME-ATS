@@ -81,6 +81,15 @@ const Index = () => {
               <Sparkles className="h-4 w-4" />
               AI-Powered Resume Analysis
             </div>
+            <div className="absolute top-4 right-4">
+              <button
+                onClick={handleSignOut}
+                className="inline-flex items-center gap-1.5 rounded-lg bg-primary-foreground/10 px-3 py-1.5 text-xs font-medium text-primary-foreground/80 hover:bg-primary-foreground/20 transition-colors"
+              >
+                <LogOut className="h-3.5 w-3.5" />
+                Sign Out
+              </button>
+            </div>
             <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
               AI Resume Analyzer
             </h1>
