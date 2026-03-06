@@ -3,7 +3,7 @@
 An AI-powered web application that analyzes resumes for ATS (Applicant Tracking System) compatibility based on a selected job role or job description.
 The tool provides realistic ATS scoring, highlights missing keywords, detects formatting issues, and suggests actionable improvements — just like real-world ATS platforms.
 
-project: https://ai-resume-ats.lovable.app
+project: https://ai-ats-freindly-resume.lovable.app
 
 🚀 Key Features
 
